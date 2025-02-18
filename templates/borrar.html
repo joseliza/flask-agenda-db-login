@@ -1,0 +1,19 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% if session['username'] %}
+    <h2>Borrar Contacto</h2>
+    <form method="post" action="/borrar">
+        <input type="text" name="nombre" placeholder="Nombre a borrar" required>
+        <button type="submit">Borrar</button>
+    </form>
+
+    {% if mensaje %}
+    <div>
+        {{ mensaje }}
+    </div>
+    {% endif %}
+{% else %}
+    Debe estar conectado para borrar un contacto.
+{% endif %}
+{% endblock %}
