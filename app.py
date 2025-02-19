@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
-from config import get_db_connection
+from config import get_db_connection, SECRET_KEY
 
 app = Flask(__name__)
 
 # Set the secret key to some random bytes. Keep this really secret!
-app.secret_key = 'mi clave secreta'
+app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():
