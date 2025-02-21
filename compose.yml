@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0-debian
+    container_name: mysql_agenda
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: usuario
+      MYSQL_DATABASE: agenda_db
+      MYSQL_USER: user_agenda_db
+      MYSQL_PASSWORD: usuario
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./app/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
+
+  flask-app:
+    build: .
+    container_name: flask_agenda
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=user_agenda_db
+      - DB_PASSWORD=usuario
+      - DB_NAME=agenda_db
+    env_file:
+      - .env
+
+volumes:
+  mysql_data:
