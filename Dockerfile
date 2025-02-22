@@ -13,9 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Exponer el puerto en el que correrá Flask
 EXPOSE 5000
 
-# Definir las variables de entorno para producción (opcional)
-ENV FLASK_APP=app/app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-
-# Comando para ejecutar la aplicación Flask
-CMD ["flask", "run"]
+# Comando para ejecutar servidor Gunicorn (recomendado en producción)
+CMD ["gunicorn", "--chdir", "./app", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
